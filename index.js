@@ -1,69 +1,69 @@
 (function () {
     const addStyles = () => {
         const styles = `
-        #effectivness {
-            position: absolute;
-            right: 5px;
-            top: 7px;
-            text-shadow: 0px 0px 4px #000,0px 1px 0px #000;
-            font-weight: bold;
-            color: #6f6;
-        }
+            #effectivness {
+                position: absolute;
+                right: 5px;
+                top: 7px;
+                text-shadow: 0px 0px 4px #000,0px 1px 0px #000;
+                font-weight: bold;
+                color: #6f6;
+            }
+            
+            .iconButton {
+                display: inline-block;
+                width: 30px;
+                height: 30px;
+                background-image: url(img/icons.png?v=2.031);
+                cursor: pointer;
+                box-shadow: 0px 0px 3px 1px rgba(255,255,255,0.2) inset;
+                margin: 2px;
+                background-position: 0 -382px;
+                padding: 8px;
+                border: 2px solid transparent;
+            }
+            
+            .activeIconButton {
+                border: 2px solid rgb(184, 255, 97);';
+            }
+            
+            .iconButton.shimmersIcon {
+                background-position: -480px -672px;
+            }
         
-        .iconButton {
-            display: inline-block;
-            width: 30px;
-            height: 30px;
-            background-image: url(img/icons.png?v=2.031);
-            cursor: pointer;
-            box-shadow: 0px 0px 3px 1px rgba(255,255,255,0.2) inset;
-            margin: 2px;
-            background-position: 0 -382px;
-            padding: 8px;
-            border: 2px solid transparent;
-        }
+            .iconButton.autoclickIcon {
+                background-position:0 -672px;
+            }
         
-        .activeIconButton {
-            border: 2px solid rgb(184, 255, 97);';
-        }
+            .iconButton.effectivenessIcon {
+                background-position:-578px -1586px;
+            }
         
-        .iconButton.shimmersIcon {
-            background-position: -480px -672px;
-        }
-    
-        .iconButton.autoclickIcon {
-            background-position:0 -672px;
-        }
-    
-        .iconButton.effectivenessIcon {
-            background-position:-578px -1586px;
-        }
-    
-        .iconButton.wrinklersIcon {
-            background-position:-912px -384px;
-        }
-        
-        .progressContainer {
-            position: relative;
-            display: inline-flex;
-            background: rgba(70, 70, 70, 0.6);
-            margin-right: 10px;
-        }
-        
-        .progressBar {
-            height: 15px;
-            background: #a8ff3d;
-            display: inline-block;
-        }
-        
-        .progressOverlay {
-            position: absolute;
-            left: 0;
-            height: 15px;
-            background: #ffd800;
-            display: inline-block;
-            mix-blend-mode: hue;
-        }
+            .iconButton.wrinklersIcon {
+                background-position:-912px -384px;
+            }
+            
+            .progressContainer {
+                position: relative;
+                display: inline-flex;
+                background: rgba(70, 70, 70, 0.6);
+                margin-right: 10px;
+            }
+            
+            .progressBar {
+                height: 15px;
+                background: #a8ff3d;
+                display: inline-block;
+            }
+            
+            .progressOverlay {
+                position: absolute;
+                left: 0;
+                height: 15px;
+                background: #ffd800;
+                display: inline-block;
+                mix-blend-mode: hue;
+            }
         `;
         const style = document.createElement('style');
         style.type = 'text/css';
