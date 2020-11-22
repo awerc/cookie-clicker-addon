@@ -42,7 +42,28 @@
             .iconButton.wrinklersIcon {
                 background-position:-912px -384px;
             }
-
+            
+            .progressContainer {
+                position: relative;
+                display: inline-flex;
+                background: rgba(70, 70, 70, 0.6);
+                margin-right: 10px;
+            }
+            
+            .progressBar {
+                height: 15px;
+                background: #a8ff3d;
+                display: inline-block;
+            }
+            
+            .progressOverlay {
+                position: absolute;
+                left: 0;
+                height: 15px;
+                background: #ffd800;
+                display: inline-block;
+                mix-blend-mode: hue;
+            }
         `;
         const style = document.createElement('style');
         style.type = 'text/css';
@@ -175,7 +196,7 @@
         Game.UpdateMenu();
     };
 
-    const createElement = ({tag, classes, text, children, onClick}) => {
+    const createElement = ({tag, classes, text, children, onClick, style}) => {
         const el = document.createElement(tag);
 
         if (classes) {
@@ -190,6 +211,9 @@
         if (onClick) {
             el.onclick = onClick;
         }
+        if (style) {
+            el.style = style;
+        }
 
         return el;
     };
@@ -200,6 +224,11 @@
         const statisticsTitle = document.querySelector('#menu > .section');
 
         if (!statisticsTitle) return;
+
+        const progressMaxWidth = 200;
+        const min = Game.shimmerTypes['golden'].minTime;
+        const time = Game.shimmerTypes['golden'].time;
+        const max = Game.shimmerTypes['golden'].maxTime;
 
         const subsection = createElement({
             tag: 'div',
@@ -233,6 +262,41 @@
                             tag: 'span',
                             classes: ['iconButton', 'effectivenessIcon', showEffectivenessActive && 'activeIconButton'],
                             onClick: toggleShowEffectiveness,
+                        }),
+                    ],
+                }),
+                createElement({
+                    tag: 'div',
+                    classes: ['listing'],
+                    children: [
+                        createElement({
+                            tag: 'div',
+                            classes: ['subsection'],
+                            children: [
+                                createElement({
+                                    tag: 'div',
+                                    classes: ['progressContainer'],
+                                    style: `width: ${progressMaxWidth}px`,
+                                    children: [
+                                        createElement({
+                                            tag: 'div',
+                                            classes: ['progressBar'],
+                                            style: `width: ${Math.round((time / max) * progressMaxWidth)}px`,
+                                        }),
+                                        createElement({
+                                            tag: 'div',
+                                            classes: ['progressOverlay'],
+                                            style: `width: ${Math.round((min / max) * progressMaxWidth)}px`,
+                                        }),
+                                    ],
+                                }),
+                                createElement({
+                                    tag: 'span',
+                                    text: `${Math.round((max - time) / Game.fps)} ${
+                                        Game.shimmerTypes['golden'].spawned === 1 ? '(spawned)' : ''
+                                    }`,
+                                }),
+                            ],
                         }),
                     ],
                 }),
@@ -278,5 +342,4 @@
         window.BackupUpdateMenu();
         addMenu();
     };
-    Game.UpdateMenu();
 })();
