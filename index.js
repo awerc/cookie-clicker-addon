@@ -75,6 +75,13 @@
         document.getElementsByTagName('head')[0].appendChild(style);
     };
 
+    const sounds = {
+        meow: new Audio('http://www.orangefreesounds.com/wp-content/uploads/2018/11/Cat-meow-audio-clip.mp3'),
+        trombone: new Audio('http://www.orangefreesounds.com/wp-content/uploads/2020/11/Trumpet-looser-fail.mp3?_=1'),
+    };
+    sounds.meow.volume = 0.05;
+    sounds.trombone.volume = 0.05;
+
     const logEnable = (func) =>
         console.log(
             `%c${func} enabled`,
@@ -113,17 +120,10 @@
             Game.UpdateMenu();
             return;
         }
-        const audioAlert = new Audio(
-            'http://www.orangefreesounds.com/wp-content/uploads/2018/11/Cat-meow-audio-clip.mp3',
-        );
-        audioAlert.volume = 0.05;
-        audioAlert.addEventListener('loadeddata', () => {
-            if (audioAlert.readyState >= 2) audioAlert.play();
-        });
         shimmerIntervalId = setInterval(() => {
             const shimmers = document.querySelectorAll('#shimmers .shimmer');
             if (shimmers.length > 0) {
-                audioAlert.play();
+                sounds.meow.play();
                 shimmers.forEach((shimmer) => shimmer.click());
             }
         }, 1500);
@@ -194,7 +194,7 @@
                 });
             };
             handler();
-            product.addEventListener('click', () => setTimeout(handler, 200));
+            product.addEventListener('click', () => setTimeout(handler, 100));
         });
         showEffectivenessActive = true;
         logEnable('Effectiveness display');
@@ -211,11 +211,9 @@
             Game.UpdateMenu();
             return;
         }
-        const audio = new Audio('http://www.orangefreesounds.com/wp-content/uploads/2018/11/Cat-meow-audio-clip.mp3');
-        audio.volume = 0.1;
         fortuneTickersIntervalId = setInterval(() => {
             if (Game.TickerEffect) {
-                audio.play();
+                sounds.trombone.play();
                 document.querySelector('.fortune').click();
             }
         }, 5000);
