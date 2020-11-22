@@ -1,69 +1,69 @@
-(function() {
+(function () {
     const addStyles = () => {
         const styles = `
-            #effectivness {
-                position: absolute;
-                right: 5px;
-                top: 7px;
-                text-shadow: 0px 0px 4px #000,0px 1px 0px #000;
-                font-weight: bold;
-                color: #6f6;
-            }
-            
-            .iconButton {
-                display: inline-block;
-                width: 30px;
-                height: 30px;
-                background-image: url(img/icons.png?v=2.031);
-                cursor: pointer;
-                box-shadow: 0px 0px 3px 1px rgba(255,255,255,0.2) inset;
-                margin: 2px;
-                background-position: 0 -382px;
-                padding: 8px;
-                border: 2px solid transparent;
-            }
-            
-            .activeIconButton {
-                border: 2px solid rgb(184, 255, 97);';
-            }
-            
-            .iconButton.shimmersIcon {
-                background-position: -480px -672px;
-            }
-
-            .iconButton.autoclickIcon {
-                background-position:0 -672px;
-            }
-
-            .iconButton.effectivenessIcon {
-                background-position:-578px -1586px;
-            }
-
-            .iconButton.wrinklersIcon {
-                background-position:-912px -384px;
-            }
-            
-            .progressContainer {
-                position: relative;
-                display: inline-flex;
-                background: rgba(70, 70, 70, 0.6);
-                margin-right: 10px;
-            }
-            
-            .progressBar {
-                height: 15px;
-                background: #a8ff3d;
-                display: inline-block;
-            }
-            
-            .progressOverlay {
-                position: absolute;
-                left: 0;
-                height: 15px;
-                background: #ffd800;
-                display: inline-block;
-                mix-blend-mode: hue;
-            }
+        #effectivness {
+            position: absolute;
+            right: 5px;
+            top: 7px;
+            text-shadow: 0px 0px 4px #000,0px 1px 0px #000;
+            font-weight: bold;
+            color: #6f6;
+        }
+        
+        .iconButton {
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            background-image: url(img/icons.png?v=2.031);
+            cursor: pointer;
+            box-shadow: 0px 0px 3px 1px rgba(255,255,255,0.2) inset;
+            margin: 2px;
+            background-position: 0 -382px;
+            padding: 8px;
+            border: 2px solid transparent;
+        }
+        
+        .activeIconButton {
+            border: 2px solid rgb(184, 255, 97);';
+        }
+        
+        .iconButton.shimmersIcon {
+            background-position: -480px -672px;
+        }
+    
+        .iconButton.autoclickIcon {
+            background-position:0 -672px;
+        }
+    
+        .iconButton.effectivenessIcon {
+            background-position:-578px -1586px;
+        }
+    
+        .iconButton.wrinklersIcon {
+            background-position:-912px -384px;
+        }
+        
+        .progressContainer {
+            position: relative;
+            display: inline-flex;
+            background: rgba(70, 70, 70, 0.6);
+            margin-right: 10px;
+        }
+        
+        .progressBar {
+            height: 15px;
+            background: #a8ff3d;
+            display: inline-block;
+        }
+        
+        .progressOverlay {
+            position: absolute;
+            left: 0;
+            height: 15px;
+            background: #ffd800;
+            display: inline-block;
+            mix-blend-mode: hue;
+        }
         `;
         const style = document.createElement('style');
         style.type = 'text/css';
@@ -71,12 +71,12 @@
         document.getElementsByTagName('head')[0].appendChild(style);
     };
 
-    const logEnable = func =>
+    const logEnable = (func) =>
         console.log(
             `%c${func} enabled`,
             'color: black; font-style: italic; background-color: #b8ff61; padding: 2px 10px;',
         );
-    const logDisable = func =>
+    const logDisable = (func) =>
         console.log(
             `%c${func} disabled`,
             'color: black; font-style: italic; background-color: #ff6161; padding: 2px 10px;',
@@ -120,7 +120,7 @@
             const shimmers = document.querySelectorAll('#shimmers .shimmer');
             if (shimmers.length > 0) {
                 audioAlert.play();
-                shimmers.forEach(shimmer => shimmer.click());
+                shimmers.forEach((shimmer) => shimmer.click());
             }
         }, 1500);
         clickShimmersActive = true;
@@ -157,16 +157,17 @@
         if (showEffectivenessActive) {
             return;
         }
-        document.querySelectorAll('.product').forEach(product => {
+        document.querySelectorAll('.product').forEach((product) => {
             const handler = () => {
-                let effArray = Game.ObjectsById.map(obj => (obj.storedCps / obj.price) * 100);
+                let effArray = Game.ObjectsById.map((obj) => (obj.storedCps / obj.price) * 100);
                 let max = Math.max(...effArray);
                 let multiplier = 1;
                 while (max < 100) {
                     multiplier *= 10;
                     max *= 10;
                 }
-                effArray = effArray.map(eff => eff * multiplier);
+                multiplier /= max / 100;
+                effArray = effArray.map((eff) => eff * multiplier);
                 const orderedEffArray = [...effArray].sort((a, b) => b - a);
                 document.querySelectorAll('.product').forEach((product, index) => {
                     let effectivness = product.querySelector('#effectivness');
@@ -200,13 +201,13 @@
         const el = document.createElement(tag);
 
         if (classes) {
-            classes.filter(Boolean).forEach(cl => el.classList.add(cl));
+            classes.filter(Boolean).forEach((cl) => el.classList.add(cl));
         }
         if (text) {
             el.innerHTML = text;
         }
         if (children) {
-            children.filter(Boolean).forEach(child => el.appendChild(child));
+            children.filter(Boolean).forEach((child) => el.appendChild(child));
         }
         if (onClick) {
             el.onclick = onClick;
@@ -226,9 +227,9 @@
         if (!statisticsTitle) return;
 
         const progressMaxWidth = 200;
-        const min = Game.shimmerTypes['golden'].minTime;
-        const time = Game.shimmerTypes['golden'].time;
-        const max = Game.shimmerTypes['golden'].maxTime;
+        const min = Game.shimmerTypes.golden.minTime;
+        const time = Game.shimmerTypes.golden.time;
+        const max = Game.shimmerTypes.golden.maxTime;
 
         const subsection = createElement({
             tag: 'div',
@@ -293,7 +294,7 @@
                                 createElement({
                                     tag: 'span',
                                     text: `${Math.round((max - time) / Game.fps)} ${
-                                        Game.shimmerTypes['golden'].spawned === 1 ? '(spawned)' : ''
+                                        Game.shimmerTypes.golden.spawned === 1 ? '(spawned)' : ''
                                     }`,
                                 }),
                             ],
@@ -342,4 +343,5 @@
         window.BackupUpdateMenu();
         addMenu();
     };
+    Game.UpdateMenu();
 })();
