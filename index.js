@@ -278,4 +278,5 @@
         window.BackupUpdateMenu();
         addMenu();
     };
+    Game.UpdateMenu();
 })();
