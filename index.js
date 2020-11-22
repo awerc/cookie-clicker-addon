@@ -43,6 +43,10 @@
                 background-position:-912px -384px;
             }
             
+            .iconButton.tickerIcon {
+                background-position: -1294px -336px;
+            }
+            
             .progressContainer {
                 position: relative;
                 display: inline-flex;
@@ -197,6 +201,29 @@
         Game.UpdateMenu();
     };
 
+    let fortuneTickersActive = false;
+    let fortuneTickersIntervalId;
+    const toggleFortuneTickers = () => {
+        if (fortuneTickersActive) {
+            clearInterval(fortuneTickersIntervalId);
+            fortuneTickersActive = false;
+            logDisable('Click fortune tickers');
+            Game.UpdateMenu();
+            return;
+        }
+        const audio = new Audio('http://www.orangefreesounds.com/wp-content/uploads/2018/11/Cat-meow-audio-clip.mp3');
+        audio.volume = 0.1;
+        fortuneTickersIntervalId = setInterval(() => {
+            if (Game.TickerEffect) {
+                audio.play();
+                document.querySelector('.fortune').click();
+            }
+        }, 5000);
+        fortuneTickersActive = true;
+        logEnable('Click fortune tickers');
+        Game.UpdateMenu();
+    };
+
     const createElement = ({tag, classes, text, children, onClick, style}) => {
         const el = document.createElement(tag);
 
@@ -258,6 +285,11 @@
                             tag: 'span',
                             classes: ['iconButton', 'wrinklersIcon', popWrinklersActive && 'activeIconButton'],
                             onClick: togglePopWrinklers,
+                        }),
+                        createElement({
+                            tag: 'span',
+                            classes: ['iconButton', 'tickerIcon', fortuneTickersActive && 'activeIconButton'],
+                            onClick: toggleFortuneTickers,
                         }),
                         createElement({
                             tag: 'span',
